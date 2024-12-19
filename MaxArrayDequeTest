@@ -1,0 +1,69 @@
+import static org.junit.Assert.*;
+import org.junit.Test;
+import java.util.Comparator;
+
+public class MaxArrayDequeTest {
+
+    @Test
+    public void testMaxWithDefaultComparator() {
+        //Create MaxArrayDeque with a default comparator (ascending order)
+        MaxArrayDeque<Integer> maxDeque = new MaxArrayDeque<>(Integer::compare);
+        maxDeque.addLast(1);
+        maxDeque.addLast(3);
+        maxDeque.addLast(2);
+
+        //Test that max() returns the maximum value according to Integer::compare (ascending order)
+        assertEquals(3, (int) maxDeque.max());
+    }
+
+    @Test
+    public void testMaxWithEmptyDeque() {
+        //Create an empty MaxArrayDeque
+        MaxArrayDeque<Integer> maxDeque = new MaxArrayDeque<>(Integer::compare);
+
+        //Test that max() returns null for an empty deque
+        assertNull(maxDeque.max());
+    }
+
+    @Test
+    public void testMaxWithCustomComparator() {
+        //Create MaxArrayDeque with default comparator (ascending order)
+        MaxArrayDeque<Integer> maxDeque = new MaxArrayDeque<>(Integer::compare);
+        maxDeque.addLast(10);
+        maxDeque.addLast(30);
+        maxDeque.addLast(20);
+
+        //Test max(Comparator<T>) with a custom comparator (descending order)
+        Comparator<Integer> descendingComparator = (a, b) -> b - a;
+
+        //Test that max(Comparator<T>) returns the maximum value according to descending order
+        assertEquals(30, (int) maxDeque.max(descendingComparator));
+    }
+
+    @Test
+    public void testMaxWithEqualElements() {
+        //Create MaxArrayDeque with default comparator (ascending order)
+        MaxArrayDeque<Integer> maxDeque = new MaxArrayDeque<>(Integer::compare);
+        maxDeque.addLast(5);
+        maxDeque.addLast(5);
+        maxDeque.addLast(5);
+
+        //Test that max() returns any one of the equal elements when they are all the same
+        assertEquals(5, (int) maxDeque.max());
+    }
+
+    @Test
+    public void testMaxWithCustomComparatorForEqualElements() {
+        //Create MaxArrayDeque with default comparator (ascending order)
+        MaxArrayDeque<Integer> maxDeque = new MaxArrayDeque<>(Integer::compare);
+        maxDeque.addLast(5);
+        maxDeque.addLast(5);
+        maxDeque.addLast(5);
+
+        //Test max(Comparator<T>) with a custom comparator that orders in ascending order
+        Comparator<Integer> ascendingComparator = (a, b) -> a - b;
+
+        //Test that max(Comparator<T>) returns any one of the equal elements
+        assertEquals(5, (int) maxDeque.max(ascendingComparator));
+    }
+}

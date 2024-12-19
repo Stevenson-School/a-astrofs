@@ -1,0 +1,171 @@
+import static org.junit.Assert.*;
+import org.junit.Test;
+import java.util.List;
+
+public class ArrayDequeTest {
+
+    @Test
+    public void addFirstTest() {
+        ArrayDeque<Integer> deque = new ArrayDeque<>();
+        deque.addFirst(10);
+        deque.addFirst(20);
+        deque.addFirst(30);
+
+        // Expected order in deque: [30, 20, 10]
+        assertEquals(3, deque.size());
+        assertEquals(30, (int) deque.get(0));
+        assertEquals(20, (int) deque.get(1));
+        assertEquals(10, (int) deque.get(2));
+    }
+
+    @Test
+    public void addLastTest() {
+        ArrayDeque<Integer> deque = new ArrayDeque<>();
+        deque.addLast(10);
+        deque.addLast(20);
+        deque.addLast(30);
+
+        // Expected order in deque: [10, 20, 30]
+        assertEquals(3, deque.size());
+        assertEquals(10, (int) deque.get(0));
+        assertEquals(20, (int) deque.get(1));
+        assertEquals(30, (int) deque.get(2));
+    }
+
+    @Test
+    public void removeFirstTest() {
+        ArrayDeque<Integer> deque = new ArrayDeque<>();
+        deque.addLast(10);
+        deque.addLast(20);
+        deque.addLast(30);
+
+        int removed = deque.removeFirst();  // should remove 10
+        assertEquals(10, removed);
+        assertEquals(2, deque.size());
+        assertEquals(20, (int) deque.get(0));
+    }
+
+    @Test
+    public void removeLastTest() {
+        ArrayDeque<Integer> deque = new ArrayDeque<>();
+        deque.addLast(10);
+        deque.addLast(20);
+        deque.addLast(30);
+
+        int removed = deque.removeLast();  // should remove 30
+        assertEquals(30, removed);
+        assertEquals(2, deque.size());
+        assertEquals(20, (int) deque.get(1));
+    }
+
+    @Test
+    public void isEmptyTest() {
+        ArrayDeque<Integer> deque = new ArrayDeque<>();
+        assertTrue(deque.isEmpty());
+
+        deque.addLast(10);
+        assertFalse(deque.isEmpty());
+
+        deque.removeFirst();
+        assertTrue(deque.isEmpty());
+    }
+
+    @Test
+    public void sizeTest() {
+        ArrayDeque<Integer> deque = new ArrayDeque<>();
+        assertEquals(0, deque.size());
+
+        deque.addLast(10);
+        deque.addLast(20);
+        assertEquals(2, deque.size());
+
+        deque.removeFirst();
+        assertEquals(1, deque.size());
+    }
+
+    @Test
+    public void getTest() {
+        ArrayDeque<Integer> deque = new ArrayDeque<>();
+        deque.addLast(10);
+        deque.addLast(20);
+        deque.addLast(30);
+
+        assertEquals(10, (int) deque.get(0));
+        assertEquals(20, (int) deque.get(1));
+        assertEquals(30, (int) deque.get(2));
+        assertNull(deque.get(3)); // Index out of bounds
+    }
+
+    @Test
+    public void toListTest() {
+        ArrayDeque<Integer> deque = new ArrayDeque<>();
+        deque.addLast(10);
+        deque.addLast(20);
+        deque.addLast(30);
+
+        List<Integer> list = deque.toList();
+        assertEquals(3, list.size());
+        assertEquals(10, (int) list.get(0));
+        assertEquals(20, (int) list.get(1));
+        assertEquals(30, (int) list.get(2));
+    }
+
+    @Test
+    public void resizeTest() {
+        ArrayDeque<Integer> deque = new ArrayDeque<>();
+
+        // Add elements to exceed initial capacity and trigger resize
+        for (int i = 0; i < 10; i++) {
+            deque.addLast(i);
+        }
+
+        // Verify all elements are in the correct order
+        assertEquals(10, deque.size());
+        for (int i = 0; i < 10; i++) {
+            assertEquals(i, (int) deque.get(i));
+        }
+
+        // Remove elements to trigger downsize
+        for (int i = 0; i < 8; i++) {
+            deque.removeFirst();
+        }
+
+        assertEquals(2, deque.size());
+        assertEquals(8, (int) deque.get(0));
+        assertEquals(9, (int) deque.get(1));
+    }
+
+    @Test
+    public void printDequeTest() {
+        ArrayDeque<Integer> deque = new ArrayDeque<>();
+        deque.addLast(10);
+        deque.addLast(20);
+        deque.addLast(30);
+
+        // Simply call the method to ensure no exceptions, checking output requires redirecting System.out
+        deque.printDeque();
+        // Expected printed output: "10 20 30 "
+    }
+
+    @Test
+    public void testToString() {
+        ArrayDeque<Integer> deque = new ArrayDeque<>();
+        deque.addFirst(10);
+        deque.addLast(20);
+        deque.addLast(30);
+
+        assertEquals("10 20 30 ", deque.toString());
+    }
+
+    @Test
+    public void testRemoveFirstOnEmpty() {
+        ArrayDeque<Integer> deque = new ArrayDeque<>();
+        assertNull(deque.removeFirst());
+    }
+
+    @Test
+    public void testRemoveLastOnEmpty() {
+        ArrayDeque<Integer> deque = new ArrayDeque<>();
+        assertNull(deque.removeLast());
+    }
+}
